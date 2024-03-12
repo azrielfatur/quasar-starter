@@ -1,19 +1,17 @@
-# develop stage
-FROM node:16.19-alpine as develop-stage
+# Menggunakan image node versi 14 sebagai base image
+FROM node:14
+
+# Menetapkan direktori kerja di dalam container
 WORKDIR /app
-RUN npm cache clean --force
+
+# Menyalin package.json dan package-lock.json ke dalam container
 COPY package*.json ./
-COPY quasar.config.js ./
-RUN npm install -g @quasar/cli
+
+# Menginstall dependencies menggunakan npm
+RUN npm install
+
+# Menyalin seluruh kode aplikasi ke dalam container
 COPY . .
 
-# build stage
-FROM develop-stage as build-stage
-RUN npm install
-RUN quasar build
-
-# production stage
-FROM nginx:1.17.5-alpine as production-stage
-COPY --from=build-stage /app/dist/spa /usr/share/nginx/html
-EXPOSE 8000
-CMD ["nginx", "-g", "daemon off;"]
+# Menjalankan aplikasi ketika container dijalankan
+CMD ["node", "app.js"]
