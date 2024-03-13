@@ -8,6 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Menginstall dependencies menggunakan npm
+RUN npm config rm proxy
+RUN npm config rm https-proxy
 RUN npm install
 
 # Menyalin seluruh kode aplikasi ke dalam container
