@@ -1,5 +1,5 @@
 # Menggunakan image node versi 14 sebagai base image
-FROM node:14
+FROM localhost:5000/docimages:latest
 
 # Menetapkan direktori kerja di dalam container
 WORKDIR /app
